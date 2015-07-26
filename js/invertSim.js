@@ -1,26 +1,36 @@
+// @author Craig LaBoda
 function invertSim() {
 	// keeps track of the sites being used to make an inversion
 	// set the current sites
 	this.currentSites = [-1 -1];
+
 	// based on the current sites, evaluates whether an inversion is possible
 	// set isPossible
 	this.isPossible = false;
+
 	// stores entire design
 	this.designArray;
+
 	// stores only parts which must be represented as P
 	// define the parts array
 	this.parts = [];
+
 	// bit map representation of which parts are currently flipped
 	this.flipBitMap;
+
 	// retains the current permutation of parts by their integer representation
 	this.currentPerm;
+
 	// array list containing all part permutations
 	this.partPermutations;
+
 	// specifies whether this InvertSim object distinguishes between inverted and non-inverted parts
 	this.combos;
+
 	// the original design of any algorithm before it is tailored
     // stored for key generation purposes
 	this.originalDesign;
+
 	// all part permutations are not generated initially because this can be time consuming
     // this field indicates whether they have been calculated yet
 	this.isPermsGenerated = false;
@@ -29,7 +39,7 @@ function invertSim() {
     // invertase string. If it is possible, this method sets the currentSites
     // values necessary for making the inversion using the invert() method.
     // If it is impossible, this method returns false.
-	this.isPossible = function(invertase) {
+	this.isInversionPossible = function(invertase) {
 		// defines the strings we search for
         var openInv = "I" + invertase;
         var closeInv = "I" + invertase + "'";
