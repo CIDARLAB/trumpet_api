@@ -10,10 +10,29 @@
  
   <script>
     QUnit.test("design test", function(assert) {
-      var design = Trumpet.design(["lacI", "lacZ"], "pancake");
+      var design = Trumpet.design(["lacI", "lacZ","lacQ"]);
       assert.ok(design);
-      console.log(design.toString());
+      console.log("Design: " + design.toString());
+	  });
+    QUnit.test("invertSeq test", function(assert) {
+      var design = Trumpet.design(["P1", "P2","P3"]);
+	  var invert = Trumpet.invertSeq("I1",design);
+      assert.ok(design);
+      console.log("Original" + design.toString());
+	  console.log("Invert I1: " + invert);
     });
+	QUnit.test("pruneDesign test", function(assert) {
+      var design = Trumpet.design(["P1", "P2","P3"]);
+      var pruned = Trumpet.pruneDesign(design);
+	  assert.ok(design);
+      console.log("Pruned design: " + pruned.toString());
+	  });
+	 QUnit.test("obtainKeys test", function(assert) {
+      var design = Trumpet.design(["P1", "P2","P3"]);
+      var keys = Trumpet.obtainKeys(design.toString(),"P1 P3 P2");
+	  assert.ok(design);
+      console.log("Keys for P1-P3-P2: " + keys.toString());
+	  });
   </script>
 </head>
 <body>

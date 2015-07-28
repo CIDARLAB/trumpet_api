@@ -16,10 +16,10 @@
 		this.parts = [];
 
 		// bit map representation of which parts are currently flipped
-		this.flipBitMap;
+		this.flipBitMap = [];
 
 		// retains the current permutation of parts by their integer representation
-		this.currentPerm;
+		this.currentPerm = [];
 
 		// array list containing all part permutations
 		this.partPermutations;
@@ -497,7 +497,7 @@
     @param design
     */
 	InvertSim.prototype.setDesignArray = function(design) {
-		this.designArray = design.split(" ");
+		this.designArray = design.toString().split(" ");
         this.clearBitMap();
         this.setCurrentPerm();
 	};
@@ -1465,51 +1465,56 @@
     	comb: true,
     	invertSeq: function(invertase, design){
 
-    		var iseq = new InvertSim();
-    		iseq.setDesignArray(design);
+    		var isim = new InvertSim();
+    		this.setDesignArray(isim,design);
     		
-    		if (iseq.isInversionPossible(invertase)){
-    			iseq.invert(config);
+    		if (isim.isInversionPossible(invertase)){
+    			isim.invert(design);
     		}
-    		//return iseq.getDesignArray;
-    		return iseq.designString();
+    		//return isim.getDesignArray;
+    		return isim.designString();
     	},
     	
+		//Given a string, remove all parts that don't start with P
     	pruneDesign: function(design){
-    		var iseq = new InvertSim;
-    		iseq.setDesignArray(design);
-    		return iseq.partsString();
+    		var isim = new InvertSim;
+    		this.setDesignArray(isim,design);
+    		return isim.partsString();
     	},
     	
     	//assumes all invertases are valid in the start design
     	//use createDesign() to get these ahead of time, or they will be generated
+		//input designs should be strings, not arrays
     	obtainKeys: function(startDesign, endDesign){
-    		//check if invertases are already present
-    		var iseq = new InvertSim();
-    		iseq.setDesignArray(startDesign);
-    		var invertases = iseq.getInvertases();
-    		
-    		var nparts = parts.split().length - invertases.length;
-    		var iseq = new LinkSort(nparts,this.comb);
+    		//replace commas with spaces
+			startDesign = startDesign.split(",").join(" ");
+			endDesign = endDesign.split(",").join(" ");
+			
+			//check if invertases are already present
+			var isim = new InvertSim();
+    		this.setDesignArray(isim,startDesign);
+    		var invertases = isim.getInvertases();
+    		var nparts = isim.getParts().length - invertases.length;
+    		var isim = new LinkSort(nparts,this.comb);
     		
     		//make the Sim
     		if ("PANCAKE"=== this.method){
-    			iseq = new Pancake(nparts, this.comb);
+    			isim = new Pancake(nparts, this.comb);
     		}
     		else{
-    			iseq = new LinkSort(nparts, this.comb);
+    			isim = new LinkSort(nparts, this.comb);
     		}
     		
     		//set invertases - all in the start, none in the target
     		if (invertases == 0){
     			startDesign = createDesign(startDesign);
     		}
-    		endDesign = pruneDesign(endDesign);
+    		endDesign = this.pruneDesign(endDesign);
     		
     		//do the work
-    		iseq.setDesignArray(startDesign);
-    		iseq.setOriginalDesign(startDesign);
-    		var key = iseq.generateKey(endDesign);
+    		isim.setDesignArray(startDesign);
+    		isim.setOriginalDesign(this.pruneDesign(startDesign));
+    		var key = isim.generateKey(endDesign);
     		return key;		
     	},
     	design: function(partIDs) {
@@ -1531,7 +1536,19 @@
     			}
     		}
     		return design;
-    	}
-	};
+    	},
+	//setDesignArray requires a space-separated String, not an array of Strings
+	//this puts the input into the proper form, then calls the method on the given InvertSim
+	setDesignArray: function(invertSim, design){
+	//var s = ""
+	//if (Object.prototype.toString.call(design) === '[object Array]'){
+	//	for (i = 0; i < design.length; i++){
+	//		s = s + design[i] + " ";
+	//	}
+	//}
+	//else s = design;
+	var s = "".concat(design," ");
+	invertSim.setDesignArray(s);
+	}};
 
 })(Trumpet = window.Trumpet || {});
