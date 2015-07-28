@@ -1461,18 +1461,11 @@
 	//                        Trumpet Object                         //
 	///////////////////////////////////////////////////////////////////
 	window.Trumpet = Trumpet.prototype = {
-	var method = "PANCAKE";
+	var method = "LinkSort"; //one of "LinkSort", "PANCAKE"
 	var comb = true;
 	
 	invertSeq: function(invertase, design){
-		/*if(method.equals("PANCAKE"){
-			var nparts = config.split(" ").length;
-			var pc = new Pancake(nparts, comb);
-			pc.
-		}
-		else{ //"LINKSORT"
-		
-		}*/
+
 		var iseq = new InvertSim;
 		iseq.setDesignArray(design);
 		
@@ -1521,6 +1514,26 @@
 		return key;		
 	}
 
+		design: function(partIDs) {
+			var partDict = {};
+			var i;
+			for (i = 0; i < partIDs.length; i++) {
+				partDict["P" + i] = partIDs[i];
+			}
+			var sim;
+			if ("PANCAKE".equals(method)) {
+				sim = new Pancake(partIDs.length, comb); 
+			} else {
+				sim = new LinkSort(partIDs.length, comb);
+			}
+			var design = sim.getDesignArray();
+			for (i = 0; i < design.length; i++) {
+				if (partDict[design[i]] != null) {
+					design[i] = partDict[design[i]];
+				}
+			}
+			return design;
+		}
 	};
 
 })(Trumpet = window.Trumpet || {});
