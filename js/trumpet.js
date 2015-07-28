@@ -789,7 +789,7 @@
 	    // by their integer value
 	    this.currentPerm = [];
 
-	    // create the actual LinkSort Design
+	    // create the actual Pancake Design
 	    this.createDesign(n);
 
 	    // define the parts array
