@@ -228,7 +228,7 @@
         // eliminate elements which were set to null
         for (i = 0; i < shortenedDesign.length; i++) {
             if (shortenedDesign[i] != null) {
-                fixedDesign = fixedDesign + shortenedDesign[i] + " ");
+                fixedDesign = (fixedDesign + shortenedDesign[i] + " ");
             }
         }
         this.setDesignArray(fixedDesign);
@@ -321,7 +321,7 @@
             this.partPermutations.push(next);
 
             // if we want all of the extra combinations
-            if (combos) {
+            if (this.combos) {
                 this.generateSubPerms(next);
             }
 
@@ -1229,11 +1229,11 @@
         for (i = 0; i < n; i++) {
             // add the prefix, part name, suffix and, first layer switch
             linkSortDesign = linkSortDesign + partPrefix[i];
-            if (combos) {
-                linkSortDesign = linkSortDesign + "I" + currentInv + " ");
+            if (this.combos) {
+                linkSortDesign = (linkSortDesign + "I" + currentInv + " ");
             }
             linkSortDesign = linkSortDesign + "P" + (i + 1) + " ";
-            if (combos) {
+            if (this.combos) {
                 currentInv++;
                 linkSortDesign = linkSortDesign + "I"+ currentInv + "' ";
             }
@@ -1346,7 +1346,7 @@
                     // does the target value's part construct need to be flipped
                     if (this.getBitMapValue(targetValue - 1) == 1) {
                         // calculate the invertase necessary to flip this
-                        invertase = n - 1 + n*(n - 1)*actualLayer + actualLayer - 1)*n + targetValue;
+                        invertase = n - 1 + n*(n - 1)*actualLayer + (actualLayer - 1)*n + targetValue;
 
                         // appennd this to the invertase key
                         invertaseKey = invertaseKey + invertase + " ";
@@ -1400,7 +1400,7 @@
 
         // if the object discerns between inverted and non-inverted parts, then
         // make sure that all of the parts are in the correct orientation
-        if (combos) {
+        if (this.combos) {
             // used for determining the index for flipping a part in the next loop
             var primedIndex = 0;
 
@@ -1468,7 +1468,7 @@
     		var iseq = new InvertSim();
     		iseq.setDesignArray(design);
     		
-    		if (iseq.isInversionPossible(invertase){
+    		if (iseq.isInversionPossible(invertase)){
     			iseq.invert(config);
     		}
     		//return iseq.getDesignArray;
@@ -1490,14 +1490,14 @@
     		var invertases = iseq.getInvertases();
     		
     		var nparts = parts.split().length - invertases.length;
-    		var iseq = new LinkSort(nparts,comb);
+    		var iseq = new LinkSort(nparts,this.comb);
     		
     		//make the Sim
-    		if ("PANCAKE".equals(method)){
-    			iseq = new Pancake(nparts, comb);
+    		if ("PANCAKE"=== this.method){
+    			iseq = new Pancake(nparts, this.comb);
     		}
     		else{
-    			iseq = new LinkSort(nparts,comb);
+    			iseq = new LinkSort(nparts, this.comb);
     		}
     		
     		//set invertases - all in the start, none in the target
@@ -1516,13 +1516,13 @@
     		var partDict = {};
     		var i;
     		for (i = 0; i < partIDs.length; i++) {
-    			partDict["P" + i] = partIDs[i];
+    			partDict["P" + (i+1)] = partIDs[i];
     		}
     		var sim;
-    		if ("PANCAKE".equals(method)) {
-    			sim = new Pancake(partIDs.length, comb); 
+    		if ("PANCAKE"=== this.method) {
+    			sim = new Pancake(partIDs.length, this.comb); 
     		} else {
-    			sim = new LinkSort(partIDs.length, comb);
+    			sim = new LinkSort(partIDs.length, this.comb);
     		}
     		var design = sim.getDesignArray();
     		for (i = 0; i < design.length; i++) {
