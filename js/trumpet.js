@@ -1461,7 +1461,65 @@
 	//                        Trumpet Object                         //
 	///////////////////////////////////////////////////////////////////
 	window.Trumpet = Trumpet.prototype = {
-
+	var method = "PANCAKE";
+	var comb = true;
+	
+	invertSeq: function(invertase, design){
+		/*if(method.equals("PANCAKE"){
+			var nparts = config.split(" ").length;
+			var pc = new Pancake(nparts, comb);
+			pc.
+		}
+		else{ //"LINKSORT"
+		
+		}*/
+		var iseq = new InvertSim;
+		iseq.setDesignArray(design);
+		
+		if (iseq.isInversionPossible(invertase){
+			iseq.invert(config);
+		}
+		//return iseq.getDesignArray;
+		return iseq.designString;
+	}
+	
+	pruneDesign: function(design){
+		var iseq = new InvertSim;
+		iseq.setDesignArray(design);
+		return iseq.partsString;
+	}
+	
+	//assumes all invertases are valid in the start design
+	//use createDesign() to get these ahead of time, or they will be generated
+	obtainKeys: function(startDesign, endDesign){
+		//check if invertases are already present
+		var iseq = new InvertSim();
+		iseq.setDesignArray(startDesign);
+		var invertases = iseq.getInvertases();
+		
+		var nparts = parts.split().length - invertases.length;
+		var iseq = new LinkSort(nparts,comb);
+		
+		//make the Sim
+		if ("PANCAKE".equals(method)){
+			iseq = new Pancake(nparts, comb);
+		}
+		else{
+			iseq = new LinkSort(nparts,comb);
+		}
+		
+		//set invertases - all in the start, none in the target
+		if (invertases == 0){
+			startDesign = createDesign(startDesign);
+		}
+		endDesign = pruneDesign(endDesign);
+		
+		//do the work
+		iseq.setDesignArray(startDesign);
+		iseq.setOriginalDesign(startDesign);
+		var key = iseq.generateKey(endDesign);
+		return key;		
+	}
 
 	};
 
