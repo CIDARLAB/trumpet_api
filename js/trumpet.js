@@ -1461,79 +1461,77 @@
 	//                        Trumpet Object                         //
 	///////////////////////////////////////////////////////////////////
 	window.Trumpet = Trumpet.prototype = {
-	var method = "LinkSort"; //one of "LinkSort", "PANCAKE"
-	var comb = true;
-	
-	invertSeq: function(invertase, design){
+    	method: "LinkSort", //one of "LinkSort", "PANCAKE"
+    	comb: true,
+    	invertSeq: function(invertase, design){
 
-		var iseq = new InvertSim;
-		iseq.setDesignArray(design);
-		
-		if (iseq.isInversionPossible(invertase){
-			iseq.invert(config);
-		}
-		//return iseq.getDesignArray;
-		return iseq.designString;
-	}
-	
-	pruneDesign: function(design){
-		var iseq = new InvertSim;
-		iseq.setDesignArray(design);
-		return iseq.partsString;
-	}
-	
-	//assumes all invertases are valid in the start design
-	//use createDesign() to get these ahead of time, or they will be generated
-	obtainKeys: function(startDesign, endDesign){
-		//check if invertases are already present
-		var iseq = new InvertSim();
-		iseq.setDesignArray(startDesign);
-		var invertases = iseq.getInvertases();
-		
-		var nparts = parts.split().length - invertases.length;
-		var iseq = new LinkSort(nparts,comb);
-		
-		//make the Sim
-		if ("PANCAKE".equals(method)){
-			iseq = new Pancake(nparts, comb);
-		}
-		else{
-			iseq = new LinkSort(nparts,comb);
-		}
-		
-		//set invertases - all in the start, none in the target
-		if (invertases == 0){
-			startDesign = createDesign(startDesign);
-		}
-		endDesign = pruneDesign(endDesign);
-		
-		//do the work
-		iseq.setDesignArray(startDesign);
-		iseq.setOriginalDesign(startDesign);
-		var key = iseq.generateKey(endDesign);
-		return key;		
-	}
-
-		design: function(partIDs) {
-			var partDict = {};
-			var i;
-			for (i = 0; i < partIDs.length; i++) {
-				partDict["P" + i] = partIDs[i];
-			}
-			var sim;
-			if ("PANCAKE".equals(method)) {
-				sim = new Pancake(partIDs.length, comb); 
-			} else {
-				sim = new LinkSort(partIDs.length, comb);
-			}
-			var design = sim.getDesignArray();
-			for (i = 0; i < design.length; i++) {
-				if (partDict[design[i]] != null) {
-					design[i] = partDict[design[i]];
-				}
-			}
-			return design;
-		}
+    		var iseq = new InvertSim();
+    		iseq.setDesignArray(design);
+    		
+    		if (iseq.isInversionPossible(invertase){
+    			iseq.invert(config);
+    		}
+    		//return iseq.getDesignArray;
+    		return iseq.designString();
+    	},
+    	
+    	pruneDesign: function(design){
+    		var iseq = new InvertSim;
+    		iseq.setDesignArray(design);
+    		return iseq.partsString();
+    	},
+    	
+    	//assumes all invertases are valid in the start design
+    	//use createDesign() to get these ahead of time, or they will be generated
+    	obtainKeys: function(startDesign, endDesign){
+    		//check if invertases are already present
+    		var iseq = new InvertSim();
+    		iseq.setDesignArray(startDesign);
+    		var invertases = iseq.getInvertases();
+    		
+    		var nparts = parts.split().length - invertases.length;
+    		var iseq = new LinkSort(nparts,comb);
+    		
+    		//make the Sim
+    		if ("PANCAKE".equals(method)){
+    			iseq = new Pancake(nparts, comb);
+    		}
+    		else{
+    			iseq = new LinkSort(nparts,comb);
+    		}
+    		
+    		//set invertases - all in the start, none in the target
+    		if (invertases == 0){
+    			startDesign = createDesign(startDesign);
+    		}
+    		endDesign = pruneDesign(endDesign);
+    		
+    		//do the work
+    		iseq.setDesignArray(startDesign);
+    		iseq.setOriginalDesign(startDesign);
+    		var key = iseq.generateKey(endDesign);
+    		return key;		
+    	},
+    	design: function(partIDs) {
+    		var partDict = {};
+    		var i;
+    		for (i = 0; i < partIDs.length; i++) {
+    			partDict["P" + i] = partIDs[i];
+    		}
+    		var sim;
+    		if ("PANCAKE".equals(method)) {
+    			sim = new Pancake(partIDs.length, comb); 
+    		} else {
+    			sim = new LinkSort(partIDs.length, comb);
+    		}
+    		var design = sim.getDesignArray();
+    		for (i = 0; i < design.length; i++) {
+    			if (partDict[design[i]] != null) {
+    				design[i] = partDict[design[i]];
+    			}
+    		}
+    		return design;
+    	}
 	};
 
 })(Trumpet = window.Trumpet || {});
