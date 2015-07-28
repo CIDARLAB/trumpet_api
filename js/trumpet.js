@@ -1171,8 +1171,8 @@
         // initialize linksort to the prefix for link sort
         for (i = 0; i < n - 1; i++) {
             // make sure to increment the current invertase number
-            currentInv++;
             linkSortDesign = linkSortDesign + "I" + currentInv + " ";
+            currentInv++;
         }
 
         // loop through each layer, there are n - 2 layers
@@ -1187,15 +1187,15 @@
                 // for each part, each layer begins with (n - 1) invertases
                 for (j = 1; j <= n - 1; j++) {
                     // stores the 4(n - 1) invertases that begin each part's string
-                    currentInv++;
                     layerPrefix[i] = layerPrefix[i] + "I" + currentInv + " ";
+					currentInv++;
                 }
 
                 // loop through the parts and create their link Prefxes
                 for (j = 0; j < n; j++) {
                     if (j != i) {
-                        linkInv++;
                         layerSuffix[j] = layerSuffix[j] + "I" + linkInv + "' ";
+						linkInv++;
                     }
                 }
 
@@ -1211,8 +1211,8 @@
                 layerPrefix[i] = "I" + currentInv + " " + layerPrefix[i];
 
                 // add it's complement to the end of the suffix
-                currentInv++;
                 layerSuffix[i] = layerSuffix[i] + "I" + currentInv + "' ";
+				currentInv++;
 
                 // now append the temporary layer suffix and prefix to the part prefix and suffix
                 partPrefix[i] = partPrefix[i] + layerPrefix[i];
@@ -1234,8 +1234,8 @@
             }
             linkSortDesign = linkSortDesign + "P" + (i + 1) + " ";
             if (this.combos) {
-                currentInv++;
                 linkSortDesign = linkSortDesign + "I"+ currentInv + "' ";
+				currentInv++;
             }
             linkSortDesign = linkSortDesign + partSuffix[i];
             if (i != 0) {
