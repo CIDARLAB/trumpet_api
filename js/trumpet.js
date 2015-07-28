@@ -1461,8 +1461,26 @@
 	//                        Trumpet Object                         //
 	///////////////////////////////////////////////////////////////////
 	window.Trumpet = Trumpet.prototype = {
-
-
+		design: function(partIDs, mode) {
+			var partDict = {};
+			var i;
+			for (i = 0; i < partIDs.length; i++) {
+				partDict["P" + i] = partIDs[i];
+			}
+			var sim;
+			if (mode === "pancake") {
+				sim = new Pancake(partIDs.length, true); 
+			} else if (mode === "linksort") {
+				sim = new LinkSort(partIDs.length, true);
+			}
+			var design = sim.getDesignArray();
+			for (i = 0; i < design.length; i++) {
+				if (partDict[design[i]] != null) {
+					design[i] = partDict[design[i]];
+				}
+			}
+			return design;
+		}
 	};
 
 })(Trumpet = window.Trumpet || {});
