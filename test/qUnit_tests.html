@@ -29,9 +29,19 @@
 	  });
 	 QUnit.test("obtainKeys test", function(assert) {
       var design = Trumpet.design(["P1", "P2","P3"]);
-      var keys = Trumpet.obtainKeys(design.toString(),"P1 P3 P2");
+      var keys = Trumpet.obtainKeys("P1 P2 P3","P1 P3 P2");
 	  assert.ok(design);
       console.log("Keys for P1-P3-P2: " + keys.toString());
+	  //console.log("Design for keys: " + design);
+	  });
+	  QUnit.test("setDesignArray test", function(assert){
+	  var isim = Trumpet.getInvertSim(3);
+	  var d1 = Trumpet.setDesignArray(isim,"P2 P1 P3");
+	  var d2 = Trumpet.setDesignArray(isim,["P2", "P1", "P3"]);
+	  assert.ok(d1);
+	  assert.ok(d2);
+	  console.log("Set design array 'P2 P1 P3': " + d1);
+	  console.log("Set design array ['P2', 'P1', 'P3']: " + d2);
 	  });
   </script>
 </head>

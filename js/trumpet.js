@@ -497,7 +497,9 @@
     @param design
     */
 	InvertSim.prototype.setDesignArray = function(design) {
-		this.designArray = design.toString().split(" ");
+		if (design.indexOf(",") >= 0) design = design.split(",");
+		else if (design.indexOf(" ") >= 0) design = design.split(" ");
+		this.designArray = design;
         this.clearBitMap();
         this.setCurrentPerm();
 	};
@@ -1303,7 +1305,7 @@
         // this loop iterates through those switches
         for (i = 0; i < n - 1; i++) {
             // find the current value
-            currentValue = currentPerm[i];
+            currentValue = this.currentPerm[i];
 
             // find the target value
             targetValue = targetPerm[i];
@@ -1319,7 +1321,7 @@
                     invertaseKey = invertaseKey + invertase + " ";
 
                     // make the switch
-                    if (this.isPossible(JSON.stringify(invertase))) {
+                    if (this.isInversionPossible(JSON.stringify(invertase))) {
                         this.invert();
                     }
 
@@ -1338,7 +1340,7 @@
                         invertaseKey = invertaseKey + invertase + " ";
 
                         // make the flip
-                        if (this.isPossible(JSON.stringify(invertase))) {
+                        if (this.isInversionPossible(JSON.stringify(invertase))) {
                             this.invert();
                         }
                     }
@@ -1352,7 +1354,7 @@
                         invertaseKey = invertaseKey + invertase + " ";
 
                         // make the flip
-                        if (this.isPossible(JSON.stringify(invertase))) {
+                        if (this.isInversionPossible(JSON.stringify(invertase))) {
                             this.invert();        
                         }
                     }
@@ -1385,7 +1387,7 @@
                     invertaseKey = invertaseKey + invertase + " ";
 
                     // make the switch
-                    if (this.isPossible(JSON.stringify(invertase))) {
+                    if (this.isInversionPossible(JSON.stringify(invertase))) {
                         this.invert();
                     }
 
@@ -1479,7 +1481,7 @@
     	pruneDesign: function(design){
     		var isim = new InvertSim;
     		this.setDesignArray(isim,design);
-    		return isim.partsString();
+    		return isim.partsString().trim();
     	},
     	
     	//assumes all invertases are valid in the start design
@@ -1489,6 +1491,8 @@
     		//replace commas with spaces
 			startDesign = startDesign.split(",").join(" ");
 			endDesign = endDesign.split(",").join(" ");
+			var prunedStart = this.pruneDesign(startDesign);
+			var prunedEnd = this.pruneDesign(endDesign);
 			
 			//check if invertases are already present
 			var isim = new InvertSim();
@@ -1507,14 +1511,16 @@
     		
     		//set invertases - all in the start, none in the target
     		if (invertases == 0){
-    			startDesign = createDesign(startDesign);
+				isim.createDesign(startDesign.length);
+    			startDesign = isim.getDesignArray();
     		}
-    		endDesign = this.pruneDesign(endDesign);
     		
     		//do the work
-    		isim.setDesignArray(startDesign);
-    		isim.setOriginalDesign(this.pruneDesign(startDesign));
-    		var key = isim.generateKey(endDesign);
+			isim.parts = prunedStart.split(" ");
+    		isim.setOriginalDesign(startDesign);
+			//isim.setCurrentPerm();
+			this.setDesignArray(isim,prunedStart);
+    		var key = isim.generateKey(prunedEnd);
     		return key;		
     	},
     	design: function(partIDs) {
@@ -1539,16 +1545,21 @@
     	},
 	//setDesignArray requires a space-separated String, not an array of Strings
 	//this puts the input into the proper form, then calls the method on the given InvertSim
-	setDesignArray: function(invertSim, design){
-	//var s = ""
-	//if (Object.prototype.toString.call(design) === '[object Array]'){
-	//	for (i = 0; i < design.length; i++){
-	//		s = s + design[i] + " ";
-	//	}
-	//}
-	//else s = design;
-	var s = "".concat(design," ");
-	invertSim.setDesignArray(s);
-	}};
+		setDesignArray: function(invertSim, design){
+			var s = "".concat(design," ");
+			invertSim.setDesignArray(s);
+			return invertSim.getDesignArray();
+		},
+		//given a number of parts, return an InvertSim object
+		getInvertSim: function(nParts){
+			var sim;
+			if ("PANCAKE"=== this.method){
+    			isim = new Pancake(nParts, this.comb);
+    		}
+    		else{
+    			isim = new LinkSort(nParts, this.comb);
+    		}
+			return isim;
+		}};
 
 })(Trumpet = window.Trumpet || {});
